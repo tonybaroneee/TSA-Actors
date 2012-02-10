@@ -44,7 +44,8 @@ public class DocumentChecker extends UntypedActor {
                 airportLines.get( currentLineChoice % airportLines.size() ).tell( msg );
             	System.out.println("Document Check: Passenger " + 
             			((Passenger) msg).getName() + "sent to line " + 
-            			( currentLineChoice % airportLines.size() ));
+            			( currentLineChoice % airportLines.size() + 1 ) );
+            	currentLineChoice++;
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to all ScanQueues and terminate self.
