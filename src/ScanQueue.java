@@ -73,7 +73,7 @@ public class ScanQueue extends UntypedActor {
 					}
 				} else {
 					Passenger p = passengersWaiting.remove( 0 );
-					bodyScanner.tell( p );
+					bodyScanner.tell( p, getContext() );
 				}
 			} else if ( msg instanceof CloseMsg ) {
 				// If msg is a CloseMsg, message is relayed to the baggage scanner 

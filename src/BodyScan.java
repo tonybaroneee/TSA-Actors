@@ -15,7 +15,6 @@ public class BodyScan extends UntypedActor {
 
     // Instance variables
     private final int lineNumber;
-    private final ActorRef scanQueue;
     private final ActorRef securityStation;
     private final String INDENT = "    ";
     private boolean isReady = true;
@@ -27,9 +26,8 @@ public class BodyScan extends UntypedActor {
      * @param scanQueue - The scan queue before this (for sending NextMsgs to)
      * @param securityStation - The security station after this (for sending Reports to)
      */
-    public BodyScan( int lineNumber, ActorRef scanQueue, ActorRef securityStation ) {
+    public BodyScan( int lineNumber, ActorRef securityStation ) {
         this.lineNumber = lineNumber;
-        this.scanQueue = scanQueue;
         this.securityStation = securityStation;
     }
 
@@ -54,7 +52,7 @@ public class BodyScan extends UntypedActor {
                 securityStation.tell( new Report( (Passenger)msg, ScanResult.PASS ) );
             }
             // Tell scan queue to send the next passenger
-            scanQueue.tell( new NextMsg() );
+            getContext().channel().tell(new NextMsg(), getContext());
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
         	System.out.println(INDENT + "Body Scan " + lineNumber + "close received");
