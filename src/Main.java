@@ -67,13 +67,23 @@ public class Main {
             lines.add(queue);
         }
 
-        // Document check
-        ActorRef documentCheck = actorOf(
+        // Make the document checker
+        ActorRef documentChecker = actorOf(
                 new UntypedActorFactory() {
                     @Override
                     public Actor create() {
                         return new DocumentChecker(lines, jail);
                     }
                 });
+
+        // Create the passengers
+        for (int passengerNum = 1; passengerNum <= TestBedConstants.NUM_PASSENGERS;
+             passengerNum++) {
+            Passenger passenger = new Passenger(
+                    passengerNum < TestBedConstants.PASSENGER_NAMES.length ?
+                    TestBedConstants.PASSENGER_NAMES[passengerNum] :
+                        "Passenger #" + passengerNum);
+            documentChecker.tell(passenger);
+        }
     }
 }
