@@ -37,7 +37,7 @@ public class DocumentChecker extends UntypedActor {
             if ( ( Math.random()*100 ) <= TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
                 // Document check failed, send passenger to jail!
             	System.out.println("Document Check: Passenger " + 
-            			((Passenger) msg).getName() + "turned away");
+            			((Passenger) msg).getName() + " turned away");
                 jail.tell( msg );
             } else {
                 // Document check passed, passenger free to advance to ScanQueue

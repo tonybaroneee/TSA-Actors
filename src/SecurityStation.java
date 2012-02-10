@@ -45,7 +45,7 @@ public class SecurityStation extends UntypedActor {
             Report report = (Report) msg;
             boolean currentResult = report.getResult().value();
             System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-                    ((Passenger) msg).getName() + " report recieved (" + 
+                    report.getPassenger().getName() + " report recieved (" + 
                     (currentResult ? "pass" : "fail") + ")");
             if ( !pendingReports.containsKey( report.getPassenger() ) ) {
                 pendingReports.put(report.getPassenger(), report);
@@ -60,7 +60,7 @@ public class SecurityStation extends UntypedActor {
                 } else {
                     // Passenger has failed one or more scans, send to Jail.
                 	System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-                			((Passenger) msg).getName() + " (" +
+                	        report.getPassenger().getName() + " (" +
                 			(previousResult ? "pass" : "fail") + "/" +
                 			(currentResult ? "pass" : "fail") +") sent to jail");
                     jail.tell( report.getPassenger() );
