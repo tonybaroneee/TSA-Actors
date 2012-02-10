@@ -17,6 +17,7 @@ public class BodyScan extends UntypedActor {
     private final int lineNumber;
     private final ActorRef scanQueue;
     private final ActorRef securityStation;
+    private final String INDENT = "    ";
     private boolean isReady = true;
 
     /**
@@ -46,14 +47,20 @@ public class BodyScan extends UntypedActor {
         //TODO deal with sending NextMsg and also storing this object's state
         //     (initial state = ready, otherwise busy and can't accept new passengers)
 
+    	
         if ( msg instanceof Passenger ) {
+        	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
+        			((Passenger) msg).getName() + " enters");
             isReady = false;
             // If msg is a Passenger, perform the body scan.
             if ( ( Math.random()*100 ) <= TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
-                // Body scan failed, send a fail Report to security station
+            	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
+            			((Passenger) msg).getName() + " fails");
                 securityStation.tell( new Report( (Passenger)msg, ScanResult.FAIL ) );
             } else {
                 // Body scan approved, send a pass Report to security station
+            	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
+            			((Passenger) msg).getName() + " passes");
                 securityStation.tell( new Report( (Passenger)msg, ScanResult.PASS ) );
             }
             isReady = true;
@@ -61,8 +68,11 @@ public class BodyScan extends UntypedActor {
             scanQueue.tell( new NextMsg() );
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
+        	System.out.println(INDENT + "Body Scan " + lineNumber + "close received");
             securityStation.tell( msg );
+            System.out.println(INDENT + "Body Scan " + lineNumber + "close sent to security");
             this.getContext().stop();
+            System.out.println(INDENT + "Body Scan " + lineNumber + "closed");
         }
     }
 }

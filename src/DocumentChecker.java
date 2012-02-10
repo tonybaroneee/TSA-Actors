@@ -31,22 +31,29 @@ public class DocumentChecker extends UntypedActor {
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
+        	System.out.println("Document Check: Passenger " + 
+        			((Passenger) msg).getName() + " arrives");
             // If msg is a Passenger, perform the document check.
             if ( ( Math.random()*100 ) <= TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
                 // Document check failed, send passenger to jail!
-                // TODO printout
+            	System.out.println("Document Check: Passenger " + 
+            			((Passenger) msg).getName() + "turned away");
                 jail.tell( msg );
             } else {
                 // Document check passed, passenger free to advance to ScanQueue
-                // TODO printout
                 airportLines.get( currentLineChoice % airportLines.size() ).tell( msg );
+            	System.out.println("Document Check: Passenger " + 
+            			((Passenger) msg).getName() + "sent to line " + 
+            			( currentLineChoice % airportLines.size() ));
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to all ScanQueues and terminate self.
+        	System.out.println("Document Check: Close sent ");
             for (ActorRef line : airportLines) {
                 line.tell(msg);
             }
             this.getContext().stop();
+            System.out.println("Document Check: Closed");
         }
     }
 

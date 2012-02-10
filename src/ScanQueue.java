@@ -19,6 +19,7 @@ public class ScanQueue extends UntypedActor {
     private final int position;
     private final ActorRef bagScanner;
     private final ActorRef bodyScanner;
+    private final String INDENT = "  ";
     private List<Passenger> passengersWaiting = new LinkedList<Passenger>();
 
     /**
@@ -36,11 +37,12 @@ public class ScanQueue extends UntypedActor {
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
-        //TODO printouts
         //TODO figure out BodyScan shtuff
         //TODO disregard any new passengers after close message sent in (maybe a boolean)
 
         if ( msg instanceof Passenger ) {
+        	System.out.println(INDENT + "Queue " + position + ": Passenger " + 
+        			((Passenger) msg).getName() + " arrives in line");
             // If msg is a Passenger, immediately send their luggage off to BaggageScan 
             // and send them to the BodyScan if it's in a 'ready' state. Otherwise, add 
             // them to the FIFO wait queue to be notified when the BodyScan requests the 
