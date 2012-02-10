@@ -35,8 +35,6 @@ public class SecurityStation extends UntypedActor {
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
-        // TODO printouts
-
         if ( msg instanceof Report ) {
             // If msg is a Report, check to see if we have received a report for
             // this passenger already. If so, make a decision whether to admit
@@ -56,7 +54,7 @@ public class SecurityStation extends UntypedActor {
                 if ( previousResult && currentResult) {
                     // Passenger passes, leaves system.
                     System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-                            ((Passenger) msg).getName() + " (pass/pass) released to airport");
+                            report.getPassenger().getName() + " (pass/pass) released to airport");
                 } else {
                     // Passenger has failed one or more scans, send to Jail.
                 	System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
