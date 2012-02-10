@@ -18,7 +18,9 @@ public class SecurityStation extends UntypedActor {
     // Instance variables
     private final int lineNumber;
     private final ActorRef jail;
+    private final int numScannersPerLine = 2;
     private Map<Passenger, Report> pendingReports = new HashMap<Passenger, Report>();
+    private String INDENT = "      ";
     private int numCloseMsgsReceived;
 
     /**
@@ -45,11 +47,16 @@ public class SecurityStation extends UntypedActor {
                 pendingReports.put(report.getPassenger(), report);
             } else {
                 ScanResult sr = pendingReports.get( report.getPassenger() ).getResult();
+                System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
+            			((Passenger) msg).getName() + " report recieved (" + 
+            			(sr.value()? "pass" : "fail") + ")");
                 if ( sr.value() && report.getResult().value() ) {
                     // Passenger passes, leaves system.
                     pendingReports.remove( report.getPassenger() );
                 } else {
                     // Passenger has failed one or more scans, send to Jail.
+                	System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
+                			((Passenger) msg).getName() + " (fail/pass) sent to jail");
                     jail.tell( report.getPassenger() );
                 }
             }
@@ -57,9 +64,14 @@ public class SecurityStation extends UntypedActor {
             // If msg is a CloseMsg, check to see if we have received CloseMsgs from
             // both scanners. If so, relay msg to Jail and terminate self.
             numCloseMsgsReceived++;
-            if ( numCloseMsgsReceived >= 2 ) {
+            System.out.println(INDENT + "Security " + lineNumber + "Close recieved (" +
+            		numCloseMsgsReceived + " of " + numScannersPerLine + ")");
+            if ( numCloseMsgsReceived >= numScannersPerLine ) {
                 jail.tell(msg);
+                System.out.println(INDENT + "Security " + lineNumber + 
+                		" Close sent to jail");
                 this.getContext().stop();
+                System.out.println(INDENT + "Security " + lineNumber + "Closed");
             }
         }
     }
