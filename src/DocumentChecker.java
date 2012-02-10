@@ -43,7 +43,7 @@ public class DocumentChecker extends UntypedActor {
                 // Document check passed, passenger free to advance to ScanQueue
                 airportLines.get( currentLineChoice % airportLines.size() ).tell( msg );
             	System.out.println("Document Check: Passenger " + 
-            			((Passenger) msg).getName() + "sent to line " + 
+            			((Passenger) msg).getName() + " sent to line " + 
             			( currentLineChoice % airportLines.size() + 1 ) );
             	currentLineChoice++;
             }
