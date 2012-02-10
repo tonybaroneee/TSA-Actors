@@ -54,7 +54,7 @@ public class ScanQueue extends UntypedActor {
 				if ( bodyScannerReady ) {
 					System.out.println(INDENT + "Queue " + position + ": Passenger " + 
 							((Passenger) msg).getName() + " enters the body scanner");
-					bodyScanner.tell( msg );
+					bodyScanner.tell( msg, getContext() );
 					bodyScannerReady = false;
 				} else {
 					passengersWaiting.add( 0, (Passenger)msg );
