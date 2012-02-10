@@ -11,14 +11,15 @@ import akka.actor.UntypedActor;
  * @author Ryan Mentley
  */
 public class Jail extends UntypedActor {
-	
+
     // Instance variables
-    final int numSecurityStations;
+    private final int numSecurityStations;
     private int numCloseMsgsReceived = 0;
-    List<Passenger> prisoners = new ArrayList<Passenger>();
-    
+    private List<Passenger> prisoners = new ArrayList<Passenger>();
+
     /**
      * Constructor for the Jail
+     * 
      * @param numSecurityStations - Amount of security stations in the airport
      */
     public Jail( int numSecurityStations ) {
@@ -44,5 +45,5 @@ public class Jail extends UntypedActor {
             }
         }
     }
-    
+
 }

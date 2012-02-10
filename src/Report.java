@@ -8,13 +8,14 @@
  * @author Ryan Mentley
  */
 public class Report {
-    
+
     // Instance variables
-    final Passenger passenger;
-    final ScanResult result;
-    
+    private final Passenger passenger;
+    private final ScanResult result;
+
     /**
      * Constructor for a message
+     * 
      * @param p - The passenger
      * @param r - The result of the particular scan this Report was passed from
      */
@@ -22,5 +23,23 @@ public class Report {
         this.passenger = p;
         this.result = r;
     }
-    
+
+    /**
+     * Return the passenger associated with this report
+     * 
+     * @return passenger
+     */
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    /**
+     * Return the ScanResult associated with this report
+     * 
+     * @return result
+     */
+    public ScanResult getResult() {
+        return result;
+    }
+
 }

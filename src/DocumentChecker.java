@@ -17,16 +17,17 @@ public class DocumentChecker extends UntypedActor {
     private final ArrayList<ActorRef> airportLines;
     private final ActorRef jail;
     private int currentLineChoice = 0;
-    
+
     /**
      * Constructor for the DocumentChecker
-     * @param airportLines
+     * 
+     * @param airportLines - All of the scan queues in the airport
      */
     public DocumentChecker( ArrayList<ActorRef> airportLines, ActorRef jail ) {
         this.airportLines = airportLines;
         this.jail = jail;
     }
-    
+
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
@@ -42,15 +43,11 @@ public class DocumentChecker extends UntypedActor {
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to all ScanQueues and terminate self.
-            for ( ActorRef line : airportLines ) {
-                line.tell( msg );
+            for (ActorRef line : airportLines) {
+                line.tell(msg);
             }
             this.getContext().stop();
         }
-        
-        
-        
-        
     }
-    
+
 }
