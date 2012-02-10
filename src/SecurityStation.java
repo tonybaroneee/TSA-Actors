@@ -43,7 +43,7 @@ public class SecurityStation extends UntypedActor {
             Report report = (Report) msg;
             boolean currentResult = report.getResult().value();
             System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-                    report.getPassenger().getName() + " report recieved (" + 
+                    report.getPassenger().getName() + " report received (" + 
                     (currentResult ? "pass" : "fail") + ")");
             if ( !pendingReports.containsKey( report.getPassenger() ) ) {
                 pendingReports.put(report.getPassenger(), report);
@@ -68,7 +68,7 @@ public class SecurityStation extends UntypedActor {
             // If msg is a CloseMsg, check to see if we have received CloseMsgs from
             // both scanners. If so, relay msg to Jail and terminate self.
             numCloseMsgsReceived++;
-            System.out.println(INDENT + "Security " + lineNumber + "Close recieved (" +
+            System.out.println(INDENT + "Security " + lineNumber + "Close received (" +
             		numCloseMsgsReceived + " of " + numScannersPerLine + ")");
             if ( numCloseMsgsReceived >= numScannersPerLine ) {
                 jail.tell(msg);
