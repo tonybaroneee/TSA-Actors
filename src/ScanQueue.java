@@ -47,7 +47,6 @@ public class ScanQueue extends UntypedActor {
 		if ( msg instanceof Passenger ) {
 			System.out.println(INDENT + "Queue " + position + ": Passenger " + 
 					((Passenger) msg).getName() + " arrives in line");
-			//TODO printouts
 
 			if ( msg instanceof Passenger && !closeMsgReceived.get() ) {
 				// If msg is a Passenger, immediately send their luggage off to BaggageScan 
