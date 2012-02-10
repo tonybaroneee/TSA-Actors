@@ -53,8 +53,12 @@ public class ScanQueue extends UntypedActor {
 				// and send them to the BodyScan if it's in a 'ready' state. Otherwise, add 
 				// them to the FIFO wait queue to be notified when the BodyScan requests the 
 				// next passenger to be scanned.
+				System.out.println(INDENT + "Queue " + position + ": Passenger " + 
+						((Passenger) msg).getName() + " baggage placed on scanner");
 				bagScanner.tell( msg );
 				if ( bodyScannerReady.get() ) {
+					System.out.println(INDENT + "Queue " + position + ": Passenger " + 
+							((Passenger) msg).getName() + " enters the body scanner");
 					bodyScanner.tell( msg );
 					bodyScannerReady.swap( false );
 				} else {
@@ -83,8 +87,11 @@ public class ScanQueue extends UntypedActor {
 				closeMsgReceived.swap( true );
 				bagScanner.tell( msg );
 				if ( bodyScannerReady.get() && passengersWaiting.isEmpty() ) {
+					System.out.println(INDENT + "Queue " + position + 
+							" Close sent to body scanner");
 					bodyScanner.tell( msg );
 					this.getContext().stop();
+					System.out.println(INDENT + "Queue " + position + " Closed");
 				}
 			}
 		}

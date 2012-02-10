@@ -18,7 +18,6 @@ public class BodyScan extends UntypedActor {
     private final ActorRef scanQueue;
     private final ActorRef securityStation;
     private final String INDENT = "    ";
-    private boolean isReady = true;
 
     /**
      * Constructor for a body scanner.
@@ -41,7 +40,6 @@ public class BodyScan extends UntypedActor {
         if ( msg instanceof Passenger ) {
         	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
         			((Passenger) msg).getName() + " enters");
-            isReady = false;
             // If msg is a Passenger, perform the body scan.
             if ( ( Math.random()*100 ) <= TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
             	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
