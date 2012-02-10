@@ -83,13 +83,14 @@ public class Main {
         documentChecker.start();
 
         // Create the passengers
-        for (int passengerNum = 1; passengerNum <= TestBedConstants.NUM_PASSENGERS;
+        for (int passengerNum = 0; passengerNum < TestBedConstants.NUM_PASSENGERS;
              passengerNum++) {
             Passenger passenger = new Passenger(
                     passengerNum < TestBedConstants.PASSENGER_NAMES.length ?
                     TestBedConstants.PASSENGER_NAMES[passengerNum] :
-                        "#" + passengerNum);
+                        "#" + passengerNum + 1);
             documentChecker.tell(passenger);
         }
+        documentChecker.tell(new CloseMsg());
     }
 }
