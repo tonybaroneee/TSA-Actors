@@ -17,7 +17,6 @@ public class BodyScan extends UntypedActor {
     private final int lineNumber;
     private final ActorRef scanQueue;
     private final ActorRef securityStation;
-    private boolean isReady = true;
 
     /**
      * Constructor for a body scanner.
@@ -31,23 +30,12 @@ public class BodyScan extends UntypedActor {
         this.scanQueue = scanQueue;
         this.securityStation = securityStation;
     }
-    
-    /**
-     * Retrieve whether or not this body scanner is willing to accept another passenger
-     * @return isReady
-     */
-    public boolean isReady() {
-        return isReady;
-    }
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
         //TODO printouts
-        //TODO deal with sending NextMsg and also storing this object's state
-        //     (initial state = ready, otherwise busy and can't accept new passengers)
 
         if ( msg instanceof Passenger ) {
-            isReady = false;
             // If msg is a Passenger, perform the body scan.
             if ( ( Math.random()*100 ) <= TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
                 // Body scan failed, send a fail Report to security station
@@ -56,7 +44,6 @@ public class BodyScan extends UntypedActor {
                 // Body scan approved, send a pass Report to security station
                 securityStation.tell( new Report( (Passenger)msg, ScanResult.PASS ) );
             }
-            isReady = true;
             // Tell scan queue to send the next passenger
             scanQueue.tell( new NextMsg() );
         } else if ( msg instanceof CloseMsg ) {
