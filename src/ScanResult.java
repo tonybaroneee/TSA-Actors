@@ -1,8 +1,3 @@
-/*
- * File: ScanResult.java
- * Date: 2/7/2012
- */
-
 /**
  * An enum of all possible result states from the airport security scanners.
  * 
@@ -12,6 +7,7 @@
  * @author Ryan Mentley
  */
 public enum ScanResult {
+    
 	PASS( true ), 
 	FAIL( false );
 	
@@ -25,4 +21,5 @@ public enum ScanResult {
     public boolean value() {
     	return resultFlag;
     }
+    
 }

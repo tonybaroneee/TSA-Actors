@@ -1,8 +1,3 @@
-/*
- * File: Passenger.java
- * Date: 2/7/2012
- */
-
 /**
  * A passenger that flows through the security system.
  * 
@@ -13,4 +8,23 @@
  */
 public class Passenger {
 	
+    // Instance variables
+    private String name;
+    
+    /**
+     * Constructor for a passenger
+     * @param name
+     */
+    public Passenger( String name ) {
+        this.name = name;
+    }
+    
+    /**
+     * Fetch the name of this passenger
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+    
 }

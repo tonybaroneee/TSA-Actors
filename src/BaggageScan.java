@@ -1,8 +1,3 @@
-/*
- * File: BodyScan.java
- * Date: 2/7/2012
- */
-
 /**
  * The bag scanner as part of a line in the airport security system. A passenger
  * is passed in (which symbolizes the luggage of the passenger) and is sent away with 
@@ -13,6 +8,6 @@
  * @author Rebecca Dudley
  * @author Ryan Mentley
  */
-public class BagScan {
+public class BaggageScan {
     
 }
