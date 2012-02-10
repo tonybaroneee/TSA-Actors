@@ -88,7 +88,7 @@ public class Main {
             Passenger passenger = new Passenger(
                     passengerNum < TestBedConstants.PASSENGER_NAMES.length ?
                     TestBedConstants.PASSENGER_NAMES[passengerNum] :
-                        "Passenger #" + passengerNum);
+                        "#" + passengerNum);
             documentChecker.tell(passenger);
         }
     }

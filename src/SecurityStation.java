@@ -43,20 +43,26 @@ public class SecurityStation extends UntypedActor {
             // through or not. Else, store the passenger & report in our reports
             // map for later.
             Report report = (Report) msg;
+            boolean currentResult = report.getResult().value();
+            System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
+                    ((Passenger) msg).getName() + " report recieved (" + 
+                    (currentResult ? "pass" : "fail") + ")");
             if ( !pendingReports.containsKey( report.getPassenger() ) ) {
                 pendingReports.put(report.getPassenger(), report);
+                
             } else {
-                ScanResult sr = pendingReports.get( report.getPassenger() ).getResult();
-                System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-            			((Passenger) msg).getName() + " report recieved (" + 
-            			(sr.value()? "pass" : "fail") + ")");
-                if ( sr.value() && report.getResult().value() ) {
+                Report previousReport = pendingReports.remove( report.getPassenger() );
+                boolean previousResult = previousReport.getResult().value();
+                if ( previousResult && currentResult) {
                     // Passenger passes, leaves system.
-                    pendingReports.remove( report.getPassenger() );
+                    System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
+                            ((Passenger) msg).getName() + " (pass/pass) released to airport");
                 } else {
                     // Passenger has failed one or more scans, send to Jail.
                 	System.out.println(INDENT + "Security " + lineNumber + ": Passenger " + 
-                			((Passenger) msg).getName() + " (fail/pass) sent to jail");
+                			((Passenger) msg).getName() + " (" +
+                			(previousResult ? "pass" : "fail") + "/" +
+                			(currentResult ? "pass" : "fail") +") sent to jail");
                     jail.tell( report.getPassenger() );
                 }
             }
