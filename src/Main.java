@@ -24,6 +24,7 @@ public class Main {
                         return new Jail();
                     }
                 });
+        jail.start();
         
         // Create the lines
     	final ArrayList<ActorRef> lines = new ArrayList<ActorRef>();
@@ -38,6 +39,7 @@ public class Main {
                             return new SecurityStation(lineNumber, jail);
                         }
                     });
+            securityStation.start();
             
             // Make the bag scanner
             final ActorRef bagScanner = actorOf(
@@ -47,6 +49,7 @@ public class Main {
                             return new BaggageScan(lineNumber, securityStation);
                         }
                     });
+            bagScanner.start();
             
             final ActorRef bodyScanner = actorOf(
             		new UntypedActorFactory() {
@@ -55,6 +58,7 @@ public class Main {
 							return new BodyScan(lineNumber, securityStation);
 						}
 					});
+            bodyScanner.start();
             
             // Make the queue
             ActorRef queue = actorOf(
@@ -64,6 +68,7 @@ public class Main {
                             return new ScanQueue(lineNumber, bagScanner, bodyScanner);
                         }
                     });
+            queue.start();
             lines.add(queue);
         }
 
@@ -75,6 +80,7 @@ public class Main {
                         return new DocumentChecker(lines, jail);
                     }
                 });
+        documentChecker.start();
 
         // Create the passengers
         for (int passengerNum = 1; passengerNum <= TestBedConstants.NUM_PASSENGERS;
