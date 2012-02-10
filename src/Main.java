@@ -21,7 +21,7 @@ public class Main {
                 new UntypedActorFactory() {
                     @Override
                     public Actor create() {
-                        return new Jail(TestBedConstants.NUM_LINES);
+                        return new Jail();
                     }
                 });
         
