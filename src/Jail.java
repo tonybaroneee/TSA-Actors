@@ -13,21 +13,9 @@ import akka.actor.UntypedActor;
 public class Jail extends UntypedActor {
 
     // Instance variables
-    private final int numSecurityStations;
     private int numCloseMsgsReceived = 0;
     private String INDENT = "        ";
     private List<Passenger> prisoners = new ArrayList<Passenger>();
-
-    /**
-     * Constructor for the Jail
-     * 
-     * @param numSecurityStations - Amount of security stations in the airport
-     */
-    public Jail( int numSecurityStations ) {
-        // Keep track of the number of security stations so we can safely close
-        // when we have received as many 'close' messages as there are stations.
-        this.numSecurityStations = numSecurityStations;
-    }
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
@@ -43,8 +31,8 @@ public class Jail extends UntypedActor {
         if ( msg instanceof CloseMsg ) {
             numCloseMsgsReceived++;
             System.out.println(INDENT + "Jail: Close received (" + numCloseMsgsReceived +
-            		" of " + numSecurityStations + " lines)" );
-            if ( numCloseMsgsReceived == numSecurityStations ) {
+            		" of " + TestBedConstants.NUM_LINES + " lines)" );
+            if ( numCloseMsgsReceived == TestBedConstants.NUM_LINES ) {
                 // All security stations have shut down, terminate Jail.
             	System.out.println("Incarcerated Passengers");
             	for (Passenger p : prisoners){
