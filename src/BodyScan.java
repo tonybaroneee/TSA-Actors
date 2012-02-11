@@ -39,7 +39,7 @@ public class BodyScan extends UntypedActor {
         	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
         			((Passenger) msg).getName() + " enters");
             // If msg is a Passenger, perform the body scan.
-            if ( ( Math.random()*100 ) <= TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
+            if ( ( Math.random()*100 ) < TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
             	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
             			((Passenger) msg).getName() + " fails");
                 securityStation.tell( new Report( (Passenger)msg, ScanResult.FAIL ) );
@@ -55,7 +55,8 @@ public class BodyScan extends UntypedActor {
             // If msg is a CloseMsg, relay to the security station and terminate self.
         	System.out.println(INDENT + "Body Scan " + lineNumber + "close received");
             securityStation.tell( msg );
-            System.out.println(INDENT + "Body Scan " + lineNumber + "close sent to security");
+            System.out.println(INDENT + "Body Scan " + lineNumber + 
+                    "close sent to security");
             this.getContext().stop();
             System.out.println(INDENT + "Body Scan " + lineNumber + "closed");
         }

@@ -34,7 +34,7 @@ public class DocumentChecker extends UntypedActor {
         	System.out.println("Document Check: Passenger " + 
         			((Passenger) msg).getName() + " arrives");
             // If msg is a Passenger, perform the document check.
-            if ( ( Math.random()*100 ) <= TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
+            if ( ( Math.random()*100 ) < TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
                 // Document check failed, send passenger to jail!
             	System.out.println("Document Check: Passenger " + 
             			((Passenger) msg).getName() + " turned away");
