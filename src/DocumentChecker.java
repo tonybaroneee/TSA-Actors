@@ -15,7 +15,6 @@ public class DocumentChecker extends UntypedActor {
 
     // Instance variables
     private final ArrayList<ActorRef> airportLines;
-    private final ActorRef jail;
     private int currentLineChoice = 0;
 
     /**
@@ -23,9 +22,8 @@ public class DocumentChecker extends UntypedActor {
      * 
      * @param airportLines All of the scan queues in the airport
      */
-    public DocumentChecker( ArrayList<ActorRef> airportLines, ActorRef jail ) {
+    public DocumentChecker( ArrayList<ActorRef> airportLines ) {
         this.airportLines = airportLines;
-        this.jail = jail;
     }
 
     @Override
@@ -35,9 +33,8 @@ public class DocumentChecker extends UntypedActor {
             printMsg("Passenger " + p.getName() + " arrives");
             // If msg is a Passenger, perform the document check.
             if ( ( Math.random()*100 ) < TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
-                // Document check failed, send passenger to jail!
+                // Document check failed, send away
                 printMsg("Passenger " + p.getName() + " turned away");
-                jail.tell( msg );
             } else {
                 // Document check passed, passenger free to advance to ScanQueue
                 airportLines.get( currentLineChoice % airportLines.size() ).tell( msg );

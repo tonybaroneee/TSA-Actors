@@ -77,7 +77,7 @@ public class Main {
                 new UntypedActorFactory() {
                     @Override
                     public Actor create() {
-                        return new DocumentChecker(lines, jail);
+                        return new DocumentChecker(lines);
                     }
                 });
         documentChecker.start();
