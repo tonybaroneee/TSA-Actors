@@ -13,10 +13,12 @@ import akka.actor.UntypedActor;
  */
 public class BodyScan extends UntypedActor {
 
+    // Constants
+    private static final String INDENT = "    ";
+
     // Instance variables
     private final int lineNumber;
     private final ActorRef securityStation;
-    private final String INDENT = "    ";
 
     /**
      * Constructor for a body scanner.
@@ -32,9 +34,6 @@ public class BodyScan extends UntypedActor {
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
-        //TODO printouts
-
-    	
         if ( msg instanceof Passenger ) {
         	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
         			((Passenger) msg).getName() + " enters");
@@ -53,12 +52,12 @@ public class BodyScan extends UntypedActor {
             getContext().channel().tell(new NextMsg(), getContext());
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
-        	System.out.println(INDENT + "Body Scan " + lineNumber + "close received");
+        	System.out.println(INDENT + "Body Scan " + lineNumber + ": Close received");
             securityStation.tell( msg );
             System.out.println(INDENT + "Body Scan " + lineNumber + 
-                    "close sent to security");
+                    ": Close sent to security");
             this.getContext().stop();
-            System.out.println(INDENT + "Body Scan " + lineNumber + "closed");
+            System.out.println(INDENT + "Body Scan " + lineNumber + ": Closed");
         }
     }
 }

@@ -13,9 +13,11 @@ import akka.actor.UntypedActor;
  */
 public class BaggageScan extends UntypedActor {
 
+    // Constants
+    private static final String INDENT = "    ";
+
     // Instance variables
     private final int lineNumber;
-    private final String INDENT = "    ";
     private final ActorRef securityStation;
 
     /**
@@ -31,8 +33,6 @@ public class BaggageScan extends UntypedActor {
 
     @Override
     public void onReceive( final Object msg ) throws Exception {
-        //TODO printouts
-
         if ( msg instanceof Passenger ) {
         	System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Passenger " + 
         			((Passenger) msg).getName() + " baggage enters");
@@ -50,12 +50,12 @@ public class BaggageScan extends UntypedActor {
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
-        	System.out.println(INDENT + "Baggage Scan " + lineNumber + "close received");
+        	System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Close received");
             securityStation.tell( msg );
             System.out.println(INDENT + "Baggage Scan " + lineNumber + 
-                    "close sent to security");
+                    "Close sent to security");
             this.getContext().stop();
-            System.out.println(INDENT + "Baggage Scan " + lineNumber + "closed");
+            System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Closed");
         }
     }
 }

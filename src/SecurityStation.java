@@ -15,12 +15,14 @@ import akka.actor.UntypedActor;
  */
 public class SecurityStation extends UntypedActor {
 
+    // Constants
+    private static final String INDENT = "      ";
+
     // Instance variables
     private final int lineNumber;
     private final ActorRef jail;
     private final int numScannersPerLine = 2;
     private Map<Passenger, Report> pendingReports = new HashMap<Passenger, Report>();
-    private String INDENT = "      ";
     private int numCloseMsgsReceived;
 
     /**

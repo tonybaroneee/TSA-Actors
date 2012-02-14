@@ -12,9 +12,11 @@ import akka.actor.UntypedActor;
  */
 public class Jail extends UntypedActor {
 
+    // Constants
+    private static final String INDENT = "        ";
+
     // Instance variables
     private int numCloseMsgsReceived = 0;
-    private String INDENT = "        ";
     private List<Passenger> prisoners = new ArrayList<Passenger>();
 
     @Override

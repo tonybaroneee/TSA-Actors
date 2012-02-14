@@ -10,7 +10,9 @@ public enum ScanResult {
 
     PASS( true ), FAIL( false );
 
-    // Represents whether the scan passed or failed
+    /**
+     * Represents whether the scan passed or failed
+     */
     private boolean resultFlag;
 
     /**
@@ -30,5 +32,4 @@ public enum ScanResult {
     public boolean value() {
         return resultFlag;
     }
-
 }
