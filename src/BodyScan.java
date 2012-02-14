@@ -35,29 +35,35 @@ public class BodyScan extends UntypedActor {
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
-        	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
-        			((Passenger) msg).getName() + " enters");
+            Passenger p = (Passenger)msg;
+            printMsg("Passenger " + p.getName() + " enters");
             // If msg is a Passenger, perform the body scan.
             if ( ( Math.random()*100 ) < TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
-            	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
-            			((Passenger) msg).getName() + " fails");
-                securityStation.tell( new Report( (Passenger)msg, ScanResult.FAIL ) );
+                printMsg("Passenger " + p.getName() + " fails");
+                securityStation.tell( new Report( p, ScanResult.FAIL ) );
             } else {
                 // Body scan approved, send a pass Report to security station
-            	System.out.println(INDENT + "Body Scan " + lineNumber + ": Passenger " + 
-            			((Passenger) msg).getName() + " passes");
-                securityStation.tell( new Report( (Passenger)msg, ScanResult.PASS ) );
+                printMsg("Passenger " + p.getName() + " passes");
+                securityStation.tell( new Report( p, ScanResult.PASS ) );
             }
             // Tell scan queue to send the next passenger
             getContext().channel().tell(new NextMsg(), getContext());
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
-        	System.out.println(INDENT + "Body Scan " + lineNumber + ": Close received");
+            printMsg("Close received");
             securityStation.tell( msg );
-            System.out.println(INDENT + "Body Scan " + lineNumber + 
-                    ": Close sent to security");
+            printMsg("Close sent to security");
             getContext().stop();
-            System.out.println(INDENT + "Body Scan " + lineNumber + ": Closed");
+            printMsg("Closed");
         }
+    }
+    
+    /**
+     * Prints a properly indented and labeled message
+     * 
+     * @param msg the message to print
+     */
+    private void printMsg(String msg) {
+        System.out.println(INDENT + "Body Scan " + lineNumber + ": " + msg);
     }
 }
