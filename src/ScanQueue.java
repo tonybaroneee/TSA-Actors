@@ -42,22 +42,20 @@ public class ScanQueue extends UntypedActor {
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
-            System.out.println(INDENT + "Queue " + position + ": Passenger " + 
-                    ((Passenger) msg).getName() + " arrives in line");
+            Passenger p = (Passenger)msg;
+            printMsg("Passenger " + p.getName() + " arrives in line");
             // If msg is a Passenger, immediately send their luggage off to BaggageScan 
             // and send them to the BodyScan if it's in a 'ready' state. Otherwise, add 
             // them to the FIFO wait queue to be notified when the BodyScan requests the 
             // next passenger to be scanned.
-            System.out.println(INDENT + "Queue " + position + ": Passenger " + 
-                    ((Passenger) msg).getName() + " baggage placed on scanner");
+            printMsg("Passenger " + p.getName() + " baggage placed on scanner");
             bagScanner.tell( msg );
             if ( bodyScannerReady ) {
-                System.out.println(INDENT + "Queue " + position + ": Passenger " + 
-                        ((Passenger) msg).getName() + " enters the body scanner");
+                printMsg("Passenger " + p.getName() + " enters the body scanner");
                 bodyScanner.tell( msg, getContext() );
                 bodyScannerReady = false;
             } else {
-                passengersWaiting.add( 0, (Passenger)msg );
+                passengersWaiting.add( 0, p );
             }
         } else if ( msg instanceof NextMsg ) {
             // If msg is a NextMsg, the body scanner is marked ready if no passengers 
@@ -67,10 +65,9 @@ public class ScanQueue extends UntypedActor {
                 // Check if we are trying to shutdown, this would be the right time
                 if ( closeMsgReceived ) {
                     bodyScanner.tell( new CloseMsg() );
-                    System.out.println(INDENT + "Queue " + position + 
-                            ": Close sent to body scanner");
+                    printMsg("Close sent to body scanner");
                     getContext().stop();
-                    System.out.println(INDENT + "Queue " + position + ": Closed");
+                    printMsg("Closed");
                 }
             } else {
                 Passenger p = passengersWaiting.remove( 0 );
@@ -85,12 +82,20 @@ public class ScanQueue extends UntypedActor {
             closeMsgReceived = true;
             bagScanner.tell( msg );
             if ( bodyScannerReady && passengersWaiting.isEmpty() ) {
-                System.out.println(INDENT + "Queue " + position + 
-                        ": Close sent to body scanner");
+                printMsg("Close sent to body scanner");
                 bodyScanner.tell( msg );
                 getContext().stop();
-                System.out.println(INDENT + "Queue " + position + ": Closed");
+                printMsg("Closed");
             }
         }
+    }
+
+    /**
+     * Prints a properly indented and labeled message
+     * 
+     * @param msg the messsage to print
+     */
+    private void printMsg (String msg) {
+        System.out.println(INDENT + "Queue " + position + ": " + msg);
     }
 }
