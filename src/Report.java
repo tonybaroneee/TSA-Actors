@@ -41,5 +41,4 @@ public class Report {
     public boolean isPassing() {
         return passing;
     }
-
 }

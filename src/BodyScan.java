@@ -57,7 +57,7 @@ public class BodyScan extends UntypedActor {
             printMsg("Closed");
         }
     }
-    
+
     /**
      * Prints a properly indented and labeled message
      * 
