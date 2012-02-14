@@ -34,28 +34,34 @@ public class BaggageScan extends UntypedActor {
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
-        	System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Passenger " + 
-        			((Passenger) msg).getName() + " baggage enters");
+            Passenger p = (Passenger)msg;
+            printMsg("Passenger " + p.getName() + " baggage enters");
             // If msg is a Passenger, perform the baggage check.
             if ( ( Math.random()*100 ) < TestBedConstants.BAG_SCAN_FAIL_PERCENTAGE ) {
                 // Baggage check failed, send a fail Report to security station
-            	System.out.println(INDENT + "Baggage Scan " + lineNumber + 
-            	        ": Passenger " + ((Passenger) msg).getName() + " baggage fails");
-                securityStation.tell( new Report( (Passenger)msg, ScanResult.FAIL ) );
+                printMsg("Passenger " + p.getName() + " baggage fails");
+                securityStation.tell( new Report( p, ScanResult.FAIL ) );
             } else {
                 // Baggage check approved, send a pass Report to security station
-            	System.out.println(INDENT + "Baggage Scan " + lineNumber + 
-            	        ": Passenger " + ((Passenger)msg).getName() + " baggage passes");
-                securityStation.tell( new Report( (Passenger)msg, ScanResult.PASS ) );
+            	printMsg("Passenger " + p.getName() + " baggage passes");
+                securityStation.tell( new Report( p, ScanResult.PASS ) );
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.
-        	System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Close received");
+            printMsg("Close received");
             securityStation.tell( msg );
-            System.out.println(INDENT + "Baggage Scan " + lineNumber + 
-                    ": Close sent to security");
+            printMsg("Close sent to security");
             getContext().stop();
-            System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Closed");
+            printMsg("Closed");
         }
+    }
+
+    /**
+     * Prints a properly indented and labeled message
+     * 
+     * @param msg the message to print
+     */
+    private void printMsg(String msg) {
+        System.out.println(INDENT + "Baggage Scan " + lineNumber + ": " + msg);
     }
 }

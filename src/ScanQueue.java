@@ -93,7 +93,7 @@ public class ScanQueue extends UntypedActor {
     /**
      * Prints a properly indented and labeled message
      * 
-     * @param msg the messsage to print
+     * @param msg the message to print
      */
     private void printMsg (String msg) {
         System.out.println(INDENT + "Queue " + position + ": " + msg);
