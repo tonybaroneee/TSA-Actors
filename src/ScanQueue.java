@@ -52,8 +52,8 @@ public class ScanQueue extends UntypedActor {
             bagScanner.tell( msg );
             if ( bodyScannerReady ) {
                 printMsg("Passenger " + p.getName() + " enters the body scanner");
-                bodyScanner.tell( msg, getContext() );
                 bodyScannerReady = false;
+                bodyScanner.tell( msg, getContext() );
             } else {
                 passengersWaiting.add( 0, p );
             }
