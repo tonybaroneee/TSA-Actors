@@ -11,7 +11,7 @@ public class Report {
 
     // Instance variables
     private final Passenger passenger;
-    private final ScanResult result;
+    private final boolean result;
 
     /**
      * Constructor for a message
@@ -19,7 +19,7 @@ public class Report {
      * @param p The passenger
      * @param r The result of the particular scan this Report was passed from
      */
-    public Report( Passenger p, ScanResult r ) {
+    public Report( Passenger p, boolean r ) {
         this.passenger = p;
         this.result = r;
     }
@@ -38,7 +38,7 @@ public class Report {
      * 
      * @return result
      */
-    public ScanResult getResult() {
+    public boolean getResult() {
         return result;
     }
 

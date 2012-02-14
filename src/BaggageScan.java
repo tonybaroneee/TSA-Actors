@@ -40,11 +40,11 @@ public class BaggageScan extends UntypedActor {
             if ( ( Math.random()*100 ) < TestBedConstants.BAG_SCAN_FAIL_PERCENTAGE ) {
                 // Baggage check failed, send a fail Report to security station
                 printMsg("Passenger " + p.getName() + " baggage fails");
-                securityStation.tell( new Report( p, ScanResult.FAIL ) );
+                securityStation.tell( new Report( p, false ) );
             } else {
                 // Baggage check approved, send a pass Report to security station
             	printMsg("Passenger " + p.getName() + " baggage passes");
-                securityStation.tell( new Report( p, ScanResult.PASS ) );
+                securityStation.tell( new Report( p, true ) );
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to the security station and terminate self.

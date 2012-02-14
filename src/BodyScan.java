@@ -40,11 +40,11 @@ public class BodyScan extends UntypedActor {
             // If msg is a Passenger, perform the body scan.
             if ( ( Math.random()*100 ) < TestBedConstants.BODY_SCAN_FAIL_PERCENTAGE ) {
                 printMsg("Passenger " + p.getName() + " fails");
-                securityStation.tell( new Report( p, ScanResult.FAIL ) );
+                securityStation.tell( new Report( p, false ) );
             } else {
                 // Body scan approved, send a pass Report to security station
                 printMsg("Passenger " + p.getName() + " passes");
-                securityStation.tell( new Report( p, ScanResult.PASS ) );
+                securityStation.tell( new Report( p, true ) );
             }
             // Tell scan queue to send the next passenger
             getContext().channel().tell(new NextMsg(), getContext());
