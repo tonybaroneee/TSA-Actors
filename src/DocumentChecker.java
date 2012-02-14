@@ -31,31 +31,37 @@ public class DocumentChecker extends UntypedActor {
     @Override
     public void onReceive( final Object msg ) throws Exception {
         if ( msg instanceof Passenger ) {
-        	System.out.println("Document Check: Passenger " + 
-        			((Passenger) msg).getName() + " arrives");
+            Passenger p = (Passenger)msg;
+            printMsg("Passenger " + p.getName() + " arrives");
             // If msg is a Passenger, perform the document check.
             if ( ( Math.random()*100 ) < TestBedConstants.DOC_CHECK_FAIL_PERCENTAGE ) {
                 // Document check failed, send passenger to jail!
-            	System.out.println("Document Check: Passenger " + 
-            			((Passenger) msg).getName() + " turned away");
+                printMsg("Passenger " + p.getName() + " turned away");
                 jail.tell( msg );
             } else {
                 // Document check passed, passenger free to advance to ScanQueue
                 airportLines.get( currentLineChoice % airportLines.size() ).tell( msg );
-            	System.out.println("Document Check: Passenger " + 
-            			((Passenger) msg).getName() + " sent to line " + 
-            			( currentLineChoice % airportLines.size() + 1 ) );
-            	currentLineChoice++;
+                printMsg("Passenger " + p.getName() + " sent to line " + 
+                        ( currentLineChoice % airportLines.size() + 1 ) );
+                currentLineChoice++;
             }
         } else if ( msg instanceof CloseMsg ) {
             // If msg is a CloseMsg, relay to all ScanQueues and terminate self.
-        	System.out.println("Document Check: Close sent ");
+            printMsg("Close sent");
             for (ActorRef line : airportLines) {
                 line.tell(msg);
             }
             getContext().stop();
-            System.out.println("Document Check: Closed");
+            printMsg("Closed");
         }
     }
 
+    /**
+     * Prints a properly indented and labeled message
+     * 
+     * @param msg the message to print
+     */
+    private void printMsg(String msg) {
+        System.out.println("Document Check: " + msg);
+    }
 }
