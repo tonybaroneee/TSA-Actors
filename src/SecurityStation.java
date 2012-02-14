@@ -28,7 +28,8 @@ public class SecurityStation extends UntypedActor {
     /**
      * Constructor for the SecurityStation
      * 
-     * @param lineNumber
+     * @param lineNumber the line number sending passengers to this security station
+     * @param jail the jail to which to send detainees
      */
     public SecurityStation( int lineNumber, ActorRef jail ) {
         this.lineNumber = lineNumber;

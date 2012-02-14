@@ -16,8 +16,8 @@ public class Report {
     /**
      * Constructor for a message
      * 
-     * @param p - The passenger
-     * @param r - The result of the particular scan this Report was passed from
+     * @param p The passenger
+     * @param r The result of the particular scan this Report was passed from
      */
     public Report( Passenger p, ScanResult r ) {
         this.passenger = p;

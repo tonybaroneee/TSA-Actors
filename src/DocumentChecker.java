@@ -21,7 +21,7 @@ public class DocumentChecker extends UntypedActor {
     /**
      * Constructor for the DocumentChecker
      * 
-     * @param airportLines - All of the scan queues in the airport
+     * @param airportLines All of the scan queues in the airport
      */
     public DocumentChecker( ArrayList<ActorRef> airportLines, ActorRef jail ) {
         this.airportLines = airportLines;

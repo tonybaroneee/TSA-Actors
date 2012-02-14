@@ -29,9 +29,9 @@ public class ScanQueue extends UntypedActor {
     /**
      * Constructor for a ScanQueue as part of a Line.
      * 
-     * @param position - The line number as to which this ScanQueue belongs to
-     * @param bagScanner - The baggage scanner belonging to this ScanQueue
-     * @param bodyScanner - The body scanner belonging to this ScanQueue
+     * @param position The line number as to which this ScanQueue belongs to
+     * @param bagScanner The baggage scanner belonging to this ScanQueue
+     * @param bodyScanner The body scanner belonging to this ScanQueue
      */
     public ScanQueue( int position, ActorRef bagScanner, ActorRef bodyScanner ) {
         this.position = position;
