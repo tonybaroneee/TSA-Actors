@@ -53,7 +53,7 @@ public class BaggageScan extends UntypedActor {
         	System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Close received");
             securityStation.tell( msg );
             System.out.println(INDENT + "Baggage Scan " + lineNumber + 
-                    "Close sent to security");
+                    ": Close sent to security");
             this.getContext().stop();
             System.out.println(INDENT + "Baggage Scan " + lineNumber + ": Closed");
         }

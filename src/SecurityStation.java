@@ -70,14 +70,14 @@ public class SecurityStation extends UntypedActor {
             // If msg is a CloseMsg, check to see if we have received CloseMsgs from
             // both scanners. If so, relay msg to Jail and terminate self.
             numCloseMsgsReceived++;
-            System.out.println(INDENT + "Security " + lineNumber + "Close received (" +
-            		numCloseMsgsReceived + " of " + numScannersPerLine + ")");
+            System.out.println(INDENT + "Security " + lineNumber + ": Close received (" +
+            		numCloseMsgsReceived + " of " + numScannersPerLine + " scanners)");
             if ( numCloseMsgsReceived >= numScannersPerLine ) {
                 jail.tell(msg);
                 System.out.println(INDENT + "Security " + lineNumber + 
-                		" Close sent to jail");
+                		": Close sent to jail");
                 this.getContext().stop();
-                System.out.println(INDENT + "Security " + lineNumber + "Closed");
+                System.out.println(INDENT + "Security " + lineNumber + ": Closed");
             }
         }
     }

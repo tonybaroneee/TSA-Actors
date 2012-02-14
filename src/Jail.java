@@ -36,12 +36,12 @@ public class Jail extends UntypedActor {
             		" of " + TestBedConstants.NUM_LINES + " lines)" );
             if ( numCloseMsgsReceived == TestBedConstants.NUM_LINES ) {
                 // All security stations have shut down, terminate Jail.
-            	System.out.println("Incarcerated Passengers");
+            	System.out.println(INDENT + "Jail: Incarcerated Passengers");
             	for (Passenger p : prisoners){
             		System.out.println(INDENT + "      Passenger " + p.getName());
             	}
                 this.getContext().stop();
-                System.out.println("Jail: Closed");
+                System.out.println("INDENT + Jail: Closed");
             }
         }
     }
