@@ -11,17 +11,17 @@ public class Report {
 
     // Instance variables
     private final Passenger passenger;
-    private final boolean result;
+    private final boolean passing;
 
     /**
      * Constructor for a message
      * 
-     * @param p The passenger
-     * @param r The result of the particular scan this Report was passed from
+     * @param passenger The passenger this report concerns
+     * @param passing The result of the particular scan this Report was passed from
      */
-    public Report( Passenger p, boolean r ) {
-        this.passenger = p;
-        this.result = r;
+    public Report( Passenger passenger, boolean passing ) {
+        this.passenger = passenger;
+        this.passing = passing;
     }
 
     /**
@@ -34,12 +34,12 @@ public class Report {
     }
 
     /**
-     * Return the ScanResult associated with this report
+     * Tells whether this is a passing report
      * 
-     * @return result
+     * @return true if passing, false if failing
      */
-    public boolean getResult() {
-        return result;
+    public boolean isPassing() {
+        return passing;
     }
 
 }

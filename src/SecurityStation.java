@@ -44,7 +44,7 @@ public class SecurityStation extends UntypedActor {
             // through or not. Else, store the passenger & report in our reports
             // map for later.
             Report report = (Report) msg;
-            boolean currentResult = report.getResult();
+            boolean currentResult = report.isPassing();
             printMsg("Passenger " + report.getPassenger().getName() +
                     " report received (" + (currentResult ? "pass" : "fail") + ")");
             if ( !pendingReports.containsKey( report.getPassenger() ) ) {
@@ -52,7 +52,7 @@ public class SecurityStation extends UntypedActor {
                 
             } else {
                 Report previousReport = pendingReports.remove( report.getPassenger() );
-                boolean previousResult = previousReport.getResult();
+                boolean previousResult = previousReport.isPassing();
                 if ( previousResult && currentResult) {
                     // Passenger passes, leaves system.
                     printMsg("Passenger " + report.getPassenger().getName() + 
