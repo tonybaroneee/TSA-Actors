@@ -56,7 +56,7 @@ public class BodyScan extends UntypedActor {
             securityStation.tell( msg );
             System.out.println(INDENT + "Body Scan " + lineNumber + 
                     ": Close sent to security");
-            this.getContext().stop();
+            getContext().stop();
             System.out.println(INDENT + "Body Scan " + lineNumber + ": Closed");
         }
     }

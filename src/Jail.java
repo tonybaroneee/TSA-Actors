@@ -40,7 +40,7 @@ public class Jail extends UntypedActor {
             	for (Passenger p : prisoners){
             		System.out.println(INDENT + "      Passenger " + p.getName());
             	}
-                this.getContext().stop();
+                getContext().stop();
                 System.out.println("INDENT + Jail: Closed");
             }
         }

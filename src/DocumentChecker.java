@@ -53,7 +53,7 @@ public class DocumentChecker extends UntypedActor {
             for (ActorRef line : airportLines) {
                 line.tell(msg);
             }
-            this.getContext().stop();
+            getContext().stop();
             System.out.println("Document Check: Closed");
         }
     }

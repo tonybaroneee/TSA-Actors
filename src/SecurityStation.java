@@ -77,7 +77,7 @@ public class SecurityStation extends UntypedActor {
                 jail.tell(msg);
                 System.out.println(INDENT + "Security " + lineNumber + 
                 		": Close sent to jail");
-                this.getContext().stop();
+                getContext().stop();
                 System.out.println(INDENT + "Security " + lineNumber + ": Closed");
             }
         }

@@ -67,7 +67,7 @@ public class ScanQueue extends UntypedActor {
                 // Check if we are trying to shutdown, this would be the right time
                 if ( closeMsgReceived ) {
                     bodyScanner.tell( new CloseMsg() );
-                    this.getContext().stop();
+                    getContext().stop();
                 }
             } else {
                 Passenger p = passengersWaiting.remove( 0 );
@@ -85,7 +85,7 @@ public class ScanQueue extends UntypedActor {
                 System.out.println(INDENT + "Queue " + position + 
                         ": Close sent to body scanner");
                 bodyScanner.tell( msg );
-                this.getContext().stop();
+                getContext().stop();
                 System.out.println(INDENT + "Queue " + position + ": Closed");
             }
         }
