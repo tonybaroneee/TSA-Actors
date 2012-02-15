@@ -29,7 +29,7 @@ public class ScanQueue extends UntypedActor {
     /**
      * Constructor for a ScanQueue as part of a Line.
      * 
-     * @param position The line number as to which this ScanQueue belongs to
+     * @param position The line number to which this ScanQueue belongs
      * @param bagScanner The baggage scanner belonging to this ScanQueue
      * @param bodyScanner The body scanner belonging to this ScanQueue
      */
