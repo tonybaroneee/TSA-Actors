@@ -16,7 +16,7 @@ import akka.actor.UntypedActorFactory;
  */
 public class Main {
     public static void main( String[] args ) {
-    	// Make the jail
+        // Make the jail
         final ActorRef jail = actorOf(
                 new UntypedActorFactory() {
                     @Override
@@ -27,9 +27,9 @@ public class Main {
         jail.start();
         
         // Create the lines
-    	final ArrayList<ActorRef> lines = new ArrayList<ActorRef>();
+        final ArrayList<ActorRef> lines = new ArrayList<ActorRef>();
         for (int lineNum = 1; lineNum <= TestBedConstants.NUM_LINES; lineNum++) {
-        	final int lineNumber = lineNum;
+            final int lineNumber = lineNum;
 
             // Make the security station
             final ActorRef securityStation = actorOf(
@@ -52,12 +52,12 @@ public class Main {
             bagScanner.start();
             
             final ActorRef bodyScanner = actorOf(
-            		new UntypedActorFactory() {
-						@Override
-						public Actor create() {
-							return new BodyScan(lineNumber, securityStation);
-						}
-					});
+                    new UntypedActorFactory() {
+                        @Override
+                        public Actor create() {
+                            return new BodyScan(lineNumber, securityStation);
+                        }
+                    });
             bodyScanner.start();
             
             // Make the queue

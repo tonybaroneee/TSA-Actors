@@ -23,9 +23,9 @@ public class BodyScan extends UntypedActor {
     /**
      * Constructor for a body scanner.
      * 
-     * @param lineNumber - Which line this scanner is in
-     * @param scanQueue - The scan queue before this (for sending NextMsgs to)
-     * @param securityStation - The security station after this (for sending Reports to)
+     * @param lineNumber The line number to which this body scanner belongs
+     * @param scanQueue The scan queue before this (for sending NextMsgs to)
+     * @param securityStation The security station after this (for sending Reports to)
      */
     public BodyScan( int lineNumber, ActorRef securityStation ) {
         this.lineNumber = lineNumber;

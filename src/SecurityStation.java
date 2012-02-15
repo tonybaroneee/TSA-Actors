@@ -17,12 +17,16 @@ public class SecurityStation extends UntypedActor {
 
     // Constants
     private static final String INDENT = "      ";
+    private static final int NUM_SCANNERS_PER_LINE = 2;
 
     // Instance variables
     private final int lineNumber;
     private final ActorRef jail;
-    private final int numScannersPerLine = 2;
-    private Map<Passenger, Report> pendingReports = new HashMap<Passenger, Report>();
+    /**
+     * Reports corresponding to passengers for whom only one report has been received 
+     */
+    private final Map<Passenger, Report> storedReports =
+            new HashMap<Passenger, Report>();
     private int numCloseMsgsReceived;
 
     /**
@@ -47,13 +51,13 @@ public class SecurityStation extends UntypedActor {
             boolean currentResult = report.isPassing();
             printMsg("Passenger " + report.getPassenger().getName() +
                     " report received (" + (currentResult ? "pass" : "fail") + ")");
-            if ( !pendingReports.containsKey( report.getPassenger() ) ) {
-                pendingReports.put(report.getPassenger(), report);
+            if ( !storedReports.containsKey( report.getPassenger() ) ) {
+                storedReports.put(report.getPassenger(), report);
                 
             } else {
-                Report previousReport = pendingReports.remove( report.getPassenger() );
+                Report previousReport = storedReports.remove( report.getPassenger() );
                 boolean previousResult = previousReport.isPassing();
-                if ( previousResult && currentResult) {
+                if (previousResult && currentResult) {
                     // Passenger passes, leaves system.
                     printMsg("Passenger " + report.getPassenger().getName() + 
                             " (pass/pass) released to airport");
@@ -70,8 +74,8 @@ public class SecurityStation extends UntypedActor {
             // both scanners. If so, relay msg to Jail and terminate self.
             numCloseMsgsReceived++;
             printMsg("Close received (" + numCloseMsgsReceived + " of " +
-                    numScannersPerLine + " scanners)");
-            if ( numCloseMsgsReceived >= numScannersPerLine ) {
+                    NUM_SCANNERS_PER_LINE + " scanners)");
+            if ( numCloseMsgsReceived >= NUM_SCANNERS_PER_LINE ) {
                 jail.tell(msg);
                 printMsg("Close sent to jail");
                 getContext().stop();

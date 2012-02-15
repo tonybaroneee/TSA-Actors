@@ -23,7 +23,7 @@ public class BaggageScan extends UntypedActor {
     /**
      * Constructor for a body scanner.
      * 
-     * @param lineNumber Which line this scanner is in
+     * @param lineNumber The line number to which this baggage scanner belongs
      * @param securityStation The security station after this (for sending Reports to)
      */
     public BaggageScan( int lineNumber, ActorRef securityStation ) {
